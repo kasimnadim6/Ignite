@@ -19,7 +19,31 @@ const Home = () => {
     <GameList>
       <h2>Upcoming Games</h2>
       <Games>
+        {upcoming.map((game) => (
+          <Game
+            key={game.id}
+            name={game.name}
+            released={game.released}
+            image={game.background_image}
+            id={game.id}
+          ></Game>
+        ))}
+      </Games>
+      <h2>Popular Games</h2>
+      <Games>
         {popular.map((game) => (
+          <Game
+            key={game.id}
+            name={game.name}
+            released={game.released}
+            image={game.background_image}
+            id={game.id}
+          ></Game>
+        ))}
+      </Games>
+      <h2>New Games</h2>
+      <Games>
+        {newGames.map((game) => (
           <Game
             key={game.id}
             name={game.name}
@@ -34,9 +58,23 @@ const Home = () => {
 };
 
 const GameList = styled(motion.div)`
-  padding: 0 5rem;
+  padding: 0 3rem;
   h2 {
-    padding: 1rem 0;
+    margin: 0 0 5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-image: linear-gradient(to right, #1f3d82, #099137);
+    display: inline-block;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: all 0.3s;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+    &:not(:first-child) {
+      margin-top: 5rem;
+    }
   }
 `;
 const Games = styled(motion.div)`
