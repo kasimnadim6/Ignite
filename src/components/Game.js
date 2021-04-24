@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getGameDetails } from '../actions/gameDetailActions';
 import { smallImage } from '../util';
+import { popup } from '../animation';
 
 const Game = ({ name, released, image, id }) => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Game = ({ name, released, image, id }) => {
     dispatch(getGameDetails(id));
   };
   return (
-    <StyledGame layoutId={id} onClick={getGameDetailsByIdHandler}>
+    <StyledGame variants={popup} initial="hidden" animate="show" layoutId={id} onClick={getGameDetailsByIdHandler}>
       <Link to={`games/${id}`}>
         <motion.h3 layoutId={`title ${id}`}>{name}</motion.h3>
         <p>{released}</p>
@@ -25,7 +26,7 @@ const Game = ({ name, released, image, id }) => {
 
 const StyledGame = styled(motion.div)`
   width: 100%;
-  min-height: 30vh;
+  height: 50vh;
   text-align: center;
   box-shadow: 0rem 2rem 4rem rgba(0, 0, 0, 0.2);
   border-radius: 5px;

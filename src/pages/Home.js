@@ -8,6 +8,7 @@ import GameDetail from '../components/GameDetail';
 //Styles and Animations
 import styled from 'styled-components';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { fadeIn } from '../animation';
 
 const Home = () => {
   const { pathname } = useLocation();
@@ -20,7 +21,7 @@ const Home = () => {
   //get data from store
   const { popular, upcoming, newGames, searchedGames } = useSelector((store) => store.games);
   return (
-    <GameList>
+    <GameList variants={fadeIn} initial="hidden" animate="show">
       <AnimateSharedLayout>
         <AnimatePresence>{pathId && <GameDetail pathId={pathId} />}</AnimatePresence>
         {searchedGames.length ? (
