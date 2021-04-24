@@ -1,58 +1,84 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loadGames } from "../actions/gamesAction";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadGames } from '../actions/gamesAction';
+import { useLocation } from 'react-router-dom';
 //Components
-import Game from "../components/Game";
+import Game from '../components/Game';
+import GameDetail from '../components/GameDetail';
 //Styles and Animations
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import styled from 'styled-components';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 const Home = () => {
+  const { pathname } = useLocation();
+  const pathId = pathname.split('/')[2];
   const dispatch = useDispatch();
   //dispatch action
   useEffect(() => {
     dispatch(loadGames());
   }, [dispatch]);
   //get data from store
-  const { popular, upcoming, newGames } = useSelector((store) => store.games);
+  const { popular, upcoming, newGames, searchedGames } = useSelector((store) => store.games);
   return (
     <GameList>
-      <h2>Upcoming Games</h2>
-      <Games>
-        {upcoming.map((game) => (
-          <Game
-            key={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-          ></Game>
-        ))}
-      </Games>
-      <h2>Popular Games</h2>
-      <Games>
-        {popular.map((game) => (
-          <Game
-            key={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-          ></Game>
-        ))}
-      </Games>
-      <h2>New Games</h2>
-      <Games>
-        {newGames.map((game) => (
-          <Game
-            key={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-          ></Game>
-        ))}
-      </Games>
+      <AnimateSharedLayout>
+        <AnimatePresence>{pathId && <GameDetail pathId={pathId} />}</AnimatePresence>
+        {searchedGames.length ? (
+          <>
+            <h2>Searched Games</h2>
+            <Games>
+              {searchedGames.map((game) => (
+                <Game
+                  key={game.id}
+                  name={game.name}
+                  released={game.released}
+                  image={game.background_image}
+                  id={game.id}
+                ></Game>
+              ))}
+            </Games>
+          </>
+        ) : (
+          ''
+        )}
+
+        <h2>Upcoming Games</h2>
+        <Games>
+          {upcoming.map((game) => (
+            <Game
+              key={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+            ></Game>
+          ))}
+        </Games>
+        <h2>Popular Games</h2>
+        <Games>
+          {popular.map((game) => (
+            <Game
+              key={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+            ></Game>
+          ))}
+        </Games>
+        <h2>New Games</h2>
+        <Games>
+          {newGames.map((game) => (
+            <Game
+              key={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+            ></Game>
+          ))}
+        </Games>
+      </AnimateSharedLayout>
     </GameList>
   );
 };
@@ -80,7 +106,7 @@ const GameList = styled(motion.div)`
 const Games = styled(motion.div)`
   min-height: 80vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   column-gap: 3rem;
   row-gap: 3rem;
 `;

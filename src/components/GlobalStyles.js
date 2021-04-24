@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 const globalStyles = createGlobalStyle`
     *{
         margin:0;
@@ -24,7 +24,7 @@ const globalStyles = createGlobalStyle`
     h3{
         font-size:1.3rem;
         color:#333;
-        padding:1.2rem;
+        padding:1.2rem 0;
     }
     p{
         font-size:1rem;
@@ -34,6 +34,13 @@ const globalStyles = createGlobalStyle`
     a{
         text-decoration:none;
         color:#333;
+    }
+    img{
+        display:block;
+    }
+    input{
+        font-family:'Montserrat',sans-serif;
+        font-size:1.5rem;
     }
 `;
 

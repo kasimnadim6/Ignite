@@ -1,11 +1,16 @@
-import Home from "./pages/Home";
-import GlobalStyles from "./components/GlobalStyles";
+import Home from './pages/Home';
+import { Route } from 'react-router-dom';
+import Nav from './components/Nav';
+import GlobalStyles from './components/GlobalStyles';
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <GlobalStyles />
-      <Home />
+      <Nav />
+      <Route path={['/', '/games/:id']}>
+        <Home />
+      </Route>
     </div>
   );
 }
